@@ -1,0 +1,29 @@
+{
+  "name": "xhe-wc",
+  "version": "0.0.1",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "",
+  "homepage": "https://github.com/remoon-net/xhe-wc",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remoon-net/xhe-wc.git"
+  },
+  "main": "index.js",
+  "browser": "index_browser.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "GPL3.0",
+  "devDependencies": {
+    "@mapbox/node-pre-gyp": "^1.0.10",
+    "@types/golang-wasm-exec": "^1.15.0",
+    "@types/node": "^20.2.5",
+    "uuid": "^9.0.0",
+    "wrtc": "^0.4.7"
+  }
+}
