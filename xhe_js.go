@@ -117,7 +117,6 @@ func (n *XheWireguard) ListenTCP(this js.Value, args []js.Value) (p any) {
 	var port int = 80
 	if len(args) >= 1 {
 		port = args[0].Int()
-		return
 	}
 	go func() {
 		defer err2.Catch(func(err error) {
