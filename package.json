@@ -14,7 +14,8 @@
   "browser": "index_browser.js",
   "types": "index.d.ts",
   "scripts": {
-    "test": "node test.js"
+    "test": "node test.js",
+    "prepack": "make wasm"
   },
   "keywords": [],
   "author": "",
