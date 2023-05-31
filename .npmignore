@@ -2,3 +2,4 @@
 !xhe-wc.wasm
 !*.js
 !/go_wasm_js
+!*.d.ts
