@@ -1,10 +1,10 @@
-interface Device {
+export interface Device {
   PrivateKey: string;
   ListenPort?: number; // not work
   Address: string;
 }
 
-interface Peer {
+export interface Peer {
   PublicKey: string;
   AllowedIPs: string[];
   PresharedKey?: string;
@@ -12,26 +12,26 @@ interface Peer {
   PersistentKeepalive?: string;
 }
 
-interface Config extends Device {
+export interface Config extends Device {
   Peers: Peer[];
 }
 
-interface Options {
+export interface Options {
   signaler?: string;
   ices?: string;
   logger?: string;
 }
 
-interface XheConnect {
+export interface XheConnect {
   (config: Config, options?: Options): Promise<XheWireguard>;
 }
 
-interface XheWireguard {
+export interface XheWireguard {
   ListenTCP(port?: number): Promise<TCPServer>;
   IpcGet(): Promise<string>;
 }
 
-interface TCPServer {
+export interface TCPServer {
   Serve(): Promise<void>;
   Close(): Promise<void>;
   ServeReady(): boolean;
