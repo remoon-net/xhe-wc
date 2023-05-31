@@ -1,13 +1,12 @@
 require("./wrtc-polyfill");
 require("./go_wasm_js/wasm_exec_node");
 const go = new Go();
-
+const fs = require("node:fs/promises");
 const path = require("path");
-const wasmUrl = path.join(module.path, "xhe-wc.wasm");
-const b = fs.readFileSync(wasmUrl);
+const defaultWasmUrl = path.join(module.path, "xhe-wc.wasm");
 
-exports.XheConnectInit = Promise.resolve(1)
-  .then(() => WebAssembly.instantiate(b, go.importObject))
-  .then(({ instance }) => {
-    return { process: go.run(instance) };
-  });
+exports.XheConnectInit = async (wasmUrl = defaultWasmUrl) => {
+  const b = await fs.readFile(wasmUrl);
+  const { instance } = await WebAssembly.instantiate(b, go.importObject);
+  return { process: go.run(instance) };
+};

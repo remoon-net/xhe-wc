@@ -42,4 +42,4 @@ declare global {
   var XheConnect: XheConnect;
 }
 
-export const XheConnectInit: Promise<any>;
+export const XheConnectInit: (wasmPath: string) => Promise<any>;
