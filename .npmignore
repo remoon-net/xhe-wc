@@ -3,3 +3,4 @@
 !*.js
 !/go_wasm_js
 !*.d.ts
+!/dist
