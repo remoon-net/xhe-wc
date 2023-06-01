@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.0.6] - 2023-06-02
+
+### Add
+
+- 添加 umd 打包, 方便直接编写 userscript 来连接 Xhe Wireguard
+
 ## [0.0.4] - 2023-05-31
 
 ### Change
