@@ -3,7 +3,7 @@ import { defineConfig } from "vite";
 export default defineConfig({
   build: {
     lib: {
-      entry: "browser.mjs",
+      entry: ".",
       name: "XheWC",
       formats: ["umd"],
     },

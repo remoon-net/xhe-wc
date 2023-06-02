@@ -10,8 +10,8 @@
     "type": "git",
     "url": "https://github.com/remoon-net/xhe-wc.git"
   },
-  "main": "index_node.js",
-  "browser": "index_browser.js",
+  "main": "index_node.cjs",
+  "browser": "index_browser.cjs",
   "types": "index.d.ts",
   "scripts": {
     "pretest": "make wasm",
