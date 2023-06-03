@@ -35,6 +35,7 @@ XheConnectInit().then(async () => {
     throw new Error("server is not ready");
   }
   await server.ReverseProxy("/", `http://127.0.0.1:${port}/`);
+  await server.HandleEval("/xhe-eval");
 
   let code = await new Promise((rl, rj) => {
     const g = require("child_process").spawn(

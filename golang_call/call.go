@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"flag"
 	"fmt"
 	"io"
@@ -8,6 +9,7 @@ import (
 	"net/netip"
 	"time"
 
+	"github.com/lainio/err2/assert"
 	"github.com/lainio/err2/try"
 	"github.com/remoon-net/xhe/pkg/config"
 	"github.com/remoon-net/xhe/signaler"
@@ -61,4 +63,14 @@ func main() {
 	resp := try.To1(client.Get("http://192.168.4.1"))
 	body := try.To1(io.ReadAll(resp.Body))
 	fmt.Println(string(body), "from golang")
+	// eval ok
+	resp2 := try.To1(client.Post("http://192.168.4.1/xhe-eval", "text/plain", bytes.NewBufferString(`resolve(9999)`)))
+	assert.Equal(resp2.StatusCode, 200)
+	body2 := try.To1(io.ReadAll(resp2.Body))
+	assert.Equal(string(body2), "9999")
+	// eval wrong
+	resp3 := try.To1(client.Post("http://192.168.4.1/xhe-eval", "text/plain", bytes.NewBufferString(`resolve(`)))
+	assert.Equal(resp3.StatusCode, 500)
+	body3 := try.To1(io.ReadAll(resp3.Body))
+	fmt.Println("wrong eval result:", string(body3))
 }
