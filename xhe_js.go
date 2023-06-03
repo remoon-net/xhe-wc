@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"io"
 	"net"
 	"net/http"
 	"net/http/httputil"
@@ -148,6 +150,7 @@ func (l *TCPServer) ToJS() (root js.Value) {
 	root.Set("Close", js.FuncOf(l.Close))
 	root.Set("ServeReady", js.FuncOf(l.ServeReady))
 	root.Set("ReverseProxy", js.FuncOf(l.ReverseProxy))
+	root.Set("HandleEval", js.FuncOf(l.HandleEval))
 	return
 }
 
@@ -199,5 +202,28 @@ func (l *TCPServer) ReverseProxy(this js.Value, args []js.Value) (p any) {
 		l.mux.Handle(path, proxy)
 		resolve(path)
 	}()
+	return
+}
+
+func (l *TCPServer) HandleEval(this js.Value, args []js.Value) (p any) {
+	path := args[0].String()
+	l.mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
+		defer err2.Catch(func(err error) {
+			w.WriteHeader(http.StatusInternalServerError)
+			fmt.Fprint(w, err.Error())
+		})
+		content := try.To1(io.ReadAll(r.Body))
+		j := try.To1(Eval(string(content)))
+		fmt.Fprint(w, j)
+	})
+	return
+}
+
+func Eval(content string) (s string, err error) {
+	defer err2.Handle(&err)
+	f := js.Global().Get("Function").New("resolve", "reject", fmt.Sprintf(`"use strict";%s;resolve();`, content))
+	p := js.Global().Get("Promise").New(f)
+	v := try.To1(promise.Await(p))
+	s = js.Global().Get("JSON").Call("stringify", v).String()
 	return
 }

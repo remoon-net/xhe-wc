@@ -36,6 +36,7 @@ export interface TCPServer {
   Close(): Promise<void>;
   ServeReady(): boolean;
   ReverseProxy(path: string, remote: string): Promise<void>;
+  HandleEval(path: string): void;
 }
 
 declare global {
