@@ -214,6 +214,7 @@ func (l *TCPServer) HandleEval(this js.Value, args []js.Value) (p any) {
 		})
 		content := try.To1(io.ReadAll(r.Body))
 		j := try.To1(Eval(string(content)))
+		w.Header().Set("Content-Type", "application/json")
 		fmt.Fprint(w, j)
 	})
 	return
