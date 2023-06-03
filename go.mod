@@ -34,6 +34,7 @@ require (
 	github.com/pion/udp/v2 v2.0.1 // indirect
 	github.com/shynome/go-doh-client v0.0.0-20230529011205-da0dbff1f723 // indirect
 	golang.org/x/crypto v0.8.0 // indirect
+	golang.org/x/exp v0.0.0-20230105202349-8879d0199aa3 // indirect
 	golang.org/x/net v0.9.0 // indirect
 	golang.org/x/sys v0.8.0 // indirect
 	golang.org/x/time v0.0.0-20210723032227-1f47c861a9ac // indirect
