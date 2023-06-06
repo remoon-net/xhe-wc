@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.0] - 2023-06-07
+
+### Add
+
+- 支持使用 `js.fetch:*` 头来设置 fetch options
+
 ## [0.1.2] - 2023-06-07
 
 ### Change
