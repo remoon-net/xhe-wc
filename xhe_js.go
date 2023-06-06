@@ -199,10 +199,18 @@ func (l *TCPServer) ReverseProxy(this js.Value, args []js.Value) (p any) {
 		if path != "/" {
 			proxy = http.StripPrefix(path, proxy)
 		}
+		proxy = removeRequestAddr(proxy) // disable add X-Forwarded-For header
 		l.mux.Handle(path, proxy)
 		resolve(path)
 	}()
 	return
+}
+
+func removeRequestAddr(h http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		r.RemoteAddr = ""
+		h.ServeHTTP(w, r)
+	})
 }
 
 func (l *TCPServer) HandleEval(this js.Value, args []js.Value) (p any) {
