@@ -9,6 +9,7 @@ import (
 	"net/netip"
 	"net/url"
 	"os"
+	"strings"
 	"syscall/js"
 
 	"github.com/lainio/err2"
@@ -200,6 +201,7 @@ func (l *TCPServer) ReverseProxy(this js.Value, args []js.Value) (p any) {
 			proxy = http.StripPrefix(path, proxy)
 		}
 		proxy = removeRequestAddr(proxy) // disable add X-Forwarded-For header
+		proxy = injectJsFetchOptions(proxy)
 		l.mux.Handle(path, proxy)
 		resolve(path)
 	}()
@@ -209,6 +211,22 @@ func (l *TCPServer) ReverseProxy(this js.Value, args []js.Value) (p any) {
 func removeRequestAddr(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		r.RemoteAddr = ""
+		h.ServeHTTP(w, r)
+	})
+}
+
+const jsFetchOptInPrefix = "Js.fetch."
+const jsFetchOptPrefix = "js.fetch:"
+
+func injectJsFetchOptions(h http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		for k, vv := range r.Header {
+			if strings.HasPrefix(k, jsFetchOptInPrefix) {
+				r.Header.Del(k)
+				k = jsFetchOptPrefix + k[len(jsFetchOptInPrefix):]
+				r.Header[k] = vv
+			}
+		}
 		h.ServeHTTP(w, r)
 	})
 }
