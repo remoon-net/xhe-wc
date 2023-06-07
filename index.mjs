@@ -5,13 +5,14 @@ if (!WebAssembly.instantiateStreaming) {
   };
 }
 
-exports.XheConnectInit = async (
-  wasmUrl = "https://unpkg.com/xhe-wc/xhe-wc.wasm"
-) => {
+import { version } from "./package.json";
+const defaultWasmUrl = `https://unpkg.com/xhe-wc@${version}/xhe-wc.wasm`;
+
+export async function XheConnectInit(wasmUrl = defaultWasmUrl) {
   const go = new Go();
   const { instance } = await WebAssembly.instantiateStreaming(
     fetch(wasmUrl),
     go.importObject
   );
   return { process: go.run(instance) };
-};
+}
