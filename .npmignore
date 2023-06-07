@@ -1,6 +1,8 @@
 *
 !xhe-wc.wasm
 !*.js
+!*.cjs
+!*.mjs
 !/go_wasm_js
 !*.d.ts
 !/dist
