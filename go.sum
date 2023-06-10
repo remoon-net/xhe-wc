@@ -81,8 +81,6 @@ github.com/pion/webrtc/v3 v3.1.59 h1:B3YFo8q6dwBYKA2LUjWRChP59Qtt+xvv1Ul7UPDp6Zc
 github.com/pion/webrtc/v3 v3.1.59/go.mod h1:rJGgStRoFyFOWJULHLayaimsG+jIEoenhJ5MB5gIFqw=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
-github.com/remoon-net/xhe v0.0.4 h1:py8rfhp0KEGR1RNBmXRVQnKgWQV2C1pIWrXyBziybEE=
-github.com/remoon-net/xhe v0.0.4/go.mod h1:bhtAfF081QhEYarwISRteECSCK8tYNC+gDyDpgoBa4U=
 github.com/sclevine/agouti v3.0.0+incompatible/go.mod h1:b4WX9W9L1sfQKXeJf1mUTLZKJ48R1S7H23Ji7oFO5Bw=
 github.com/shynome/go-doh-client v0.0.0-20230529011205-da0dbff1f723 h1:+3k3U2z81UX176rdS5spW8yJ/5jzc8Q5MNynAG7A/d8=
 github.com/shynome/go-doh-client v0.0.0-20230529011205-da0dbff1f723/go.mod h1:FDqAY3qhnKeODabhP61N59Gx4gBMpU8hgaQhw39TO8E=
@@ -204,3 +202,5 @@ gopkg.in/yaml.v3 v3.0.1 h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=
 gopkg.in/yaml.v3 v3.0.1/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=
 gvisor.dev/gvisor v0.0.0-20221203005347-703fd9b7fbc0 h1:Wobr37noukisGxpKo5jAsLREcpj61RxrWYzD8uwveOY=
 gvisor.dev/gvisor v0.0.0-20221203005347-703fd9b7fbc0/go.mod h1:Dn5idtptoW1dIos9U6A2rpebLs/MtTwFacjKb8jLdQA=
+remoon.net/xhe v0.0.6 h1:LN+d1N8oReHQkLj2o3UB6ACumhfRSJWZB4U2SnpRHH0=
+remoon.net/xhe v0.0.6/go.mod h1:1WSnQRd92HmH8jxFByMicS5gun8tkj9Iv1ec77PDcSY=

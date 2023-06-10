@@ -12,21 +12,17 @@ const server = require("http")
 let port = server.address().port;
 
 XheConnectInit().then(async () => {
-  let xhe = await XheConnect(
-    {
-      PrivateKey: "CFp1j2epz2sUJ8ovPeUgiStto8EOAAnmvGWp+SSECmI=",
-      Address: "192.168.4.1/24",
-      Peers: [
-        {
-          PublicKey: "TUpLBfCKwL0joxi+nOsE3+wgxjhlIZdtlcftup/lRik=",
-          AllowedIPs: ["192.168.4.2/32"],
-        },
-      ],
-    },
-    {
-      signaler: `https://test:test@signaler.slive.fun?t=${device_id}`,
-    }
-  );
+  let xhe = await XheConnect({
+    PrivateKey: "CFp1j2epz2sUJ8ovPeUgiStto8EOAAnmvGWp+SSECmI=",
+    Addrs: ["192.168.4.1/24"],
+    Link: `https://test:test@signaler.slive.fun?t=${device_id}`,
+    Peers: [
+      {
+        PublicKey: "TUpLBfCKwL0joxi+nOsE3+wgxjhlIZdtlcftup/lRik=",
+        AllowedIPs: ["192.168.4.2/32"],
+      },
+    ],
+  });
   let server = await xhe.ListenTCP();
   server.Serve().catch(() => {
     // donothing

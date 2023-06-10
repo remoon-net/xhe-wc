@@ -1,4 +1,4 @@
-module github.com/remoon-net/xhe-wc
+module remoon.net/xhe-wc
 
 go 1.20
 
@@ -6,10 +6,10 @@ require (
 	github.com/lainio/err2 v0.9.1
 	github.com/nlepage/go-js-promise v1.1.0
 	github.com/pion/webrtc/v3 v3.1.59
-	github.com/remoon-net/xhe v0.0.4
 	github.com/shynome/wgortc v0.0.9
 	golang.zx2c4.com/wireguard v0.0.0-20230325221338-052af4a8072b
 	gvisor.dev/gvisor v0.0.0-20221203005347-703fd9b7fbc0
+	remoon.net/xhe v0.0.6
 )
 
 require (

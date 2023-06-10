@@ -1,7 +1,12 @@
 export interface Device {
   PrivateKey: string;
   ListenPort?: number; // not work
-  Address: string;
+  /**
+   * @deprecated 转而使用 Addrs 字段
+   */
+  Address?: string;
+  Addrs: string[];
+  Link?: string;
 }
 
 export interface Peer {
@@ -17,6 +22,9 @@ export interface Config extends Device {
 }
 
 export interface Options {
+  /**
+   * @deprecated 转而使用 Config.Link
+   */
   signaler?: string;
   ices?: string;
   logger?: string;

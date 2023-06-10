@@ -11,11 +11,11 @@ import (
 
 	"github.com/lainio/err2/assert"
 	"github.com/lainio/err2/try"
-	"github.com/remoon-net/xhe/pkg/config"
-	"github.com/remoon-net/xhe/signaler"
 	"github.com/shynome/wgortc"
 	"golang.zx2c4.com/wireguard/device"
 	"golang.zx2c4.com/wireguard/tun/netstack"
+	"remoon.net/xhe/pkg/config"
+	"remoon.net/xhe/signaler"
 )
 
 func main() {

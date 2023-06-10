@@ -15,12 +15,12 @@ import (
 	"github.com/lainio/err2"
 	"github.com/lainio/err2/try"
 	promise "github.com/nlepage/go-js-promise"
-	"github.com/remoon-net/xhe/pkg/config"
-	"github.com/remoon-net/xhe/signaler"
 	"github.com/shynome/wgortc"
 	"golang.zx2c4.com/wireguard/device"
 	"golang.zx2c4.com/wireguard/tun/netstack"
 	"gvisor.dev/gvisor/pkg/tcpip/adapters/gonet"
+	"remoon.net/xhe/pkg/config"
+	"remoon.net/xhe/signaler"
 )
 
 var dev *device.Device
@@ -44,13 +44,24 @@ func connect(this js.Value, args []js.Value) (p any) {
 
 		var config = try.To1(getConfig[config.Config](args[0]))
 
-		if config.Address == "" {
+		var laddrs []netip.Addr
+		{
+			addrs := config.Addrs
+			if config.Address != "" {
+				addrs = append(addrs, config.Address)
+			}
+			for _, addr := range addrs {
+				laddr := try.To1(parseIP(addr))
+				laddrs = append(laddrs, laddr)
+			}
+		}
+		if len(laddrs) == 0 {
 			reject("address is required")
 			return
 		}
-		addr := try.To1(parseIP(config.Address))
+
 		tdev, tnet, err := netstack.CreateNetTUN(
-			[]netip.Addr{addr},
+			laddrs,
 			[]netip.Addr{netip.MustParseAddr("1.1.1.1")},
 			device.DefaultMTU)
 		try.To(err)
@@ -67,7 +78,14 @@ func connect(this js.Value, args []js.Value) (p any) {
 		}
 		options.LoggerName += " "
 
-		s := signaler.New(options.Signaler)
+		var link string
+		{
+			link = config.Link
+			if link == "" {
+				link = options.Signaler
+			}
+		}
+		s := signaler.New(link)
 		bind := wgortc.NewBind(s)
 		bind.ICEServers = options.ICEServers
 
