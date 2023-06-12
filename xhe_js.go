@@ -214,14 +214,17 @@ func (l *TCPServer) ReverseProxy(this js.Value, args []js.Value) (p any) {
 		}
 		path := args[0].String()
 		remote := try.To1(url.Parse(args[1].String()))
-		var proxy http.Handler = httputil.NewSingleHostReverseProxy(remote)
+
+		var proxy = httputil.NewSingleHostReverseProxy(remote)
+		proxy.Transport = removeUserAgentTransport{proxy.Transport}
+
+		var handler http.Handler = proxy
 		if path != "/" {
-			proxy = http.StripPrefix(path, proxy)
+			handler = http.StripPrefix(path, handler)
 		}
-		proxy = omitForwardHeader(proxy) // omit X-Forwarded-For header
-		proxy = deleteUserAgent(proxy)
-		proxy = injectJsFetchOptions(proxy)
-		l.mux.Handle(path, proxy)
+		handler = omitForwardHeader(handler) // omit X-Forwarded-For header
+		handler = injectJsFetchOptions(handler)
+		l.mux.Handle(path, handler)
 		resolve(path)
 	}()
 	return
@@ -234,11 +237,17 @@ func omitForwardHeader(h http.Handler) http.Handler {
 	})
 }
 
-func deleteUserAgent(h http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		r.Header.Del("User-Agent")
-		h.ServeHTTP(w, r)
-	})
+type removeUserAgentTransport struct {
+	http.RoundTripper
+}
+
+func (r removeUserAgentTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+	transport := r.RoundTripper
+	if transport == nil {
+		transport = http.DefaultTransport
+	}
+	req.Header.Del("User-Agent")
+	return transport.RoundTrip(req)
 }
 
 const jsFetchOptInPrefix = "Js.fetch."
