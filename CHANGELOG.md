@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.3.1] - 2023-06-12
+
+### Change
+
+- 不再通过将 `r.RemoteAddr` 设为空字符串来去除 `X-Forwarded-For` 请求头, 而是使用 omit 方式来去除. (omit 方式: 将 `X-Forwarded-For` 设为 nil)
+
 ## [0.3.0] - 2023-06-10
 
 ### Change
